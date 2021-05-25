@@ -6,7 +6,7 @@ def base():
     cars = ['ferrari', 'maserati', 'mclaren']
     bikes = []
     number = 0
-    title = "ifblockstitle"
+    title = ""
     return render_template(
     'base.html', 
     cars=cars, 

@@ -1,0 +1,180 @@
+"Animal classes to demonstrate OOP" # docstring
+
+class Animal():
+    "A class representing the whole animal kingdom"
+    name = "Generic animal"
+
+    def sound(self):
+        return f"Generic sounds by { 
+self.name
+ }"
+
+    def __repr__(self):
+        return f"<Animal {
+self.name
+}>"
+
+class Lion(Animal):
+    def sound(self):
+        return "Rooaar!"
+
+def main():
+    lion = Lion()
+    print(lion.sound())
+    ani = Animal()
+    print(ani.sound())
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+
+
+
+
+
+
+class Animal():
+    name = "Generic animal"
+
+    def sound(self):
+        return "Generic cute animal sounds"
+
+class Lion(Animal):
+    def sound(self):
+        return "Rooaar!"
+
+def main():
+    lion = Lion()
+    print(lion.sound())
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+
+
+    
+    class Animal():
+        name = "Generic animal"
+    
+        def sound(self):
+            return "Generic cute animal sounds"
+    
+    animal = Animal()
+    animal.name
+     = "Generissimus"
+    thingy = Animal()
+    thingy.name
+     = "Thingimus"
+    
+    print(
+    animal.name
+    )
+    print(animal.sound())
+    
+    print(f"Thingimuses name: { 
+    thingy.name
+     }")
+
+
+
+
+
+
+     $ head -100 
+     functiones.py
+      
+     importing.py
+      
+     ==> 
+     functiones.py
+      <==
+     def square(x):
+         return x*x
+     
+     if __name__ == "__main__":
+         print(square(2))
+     
+     ==> 
+     importing.py
+      <==
+     from functiones import square
+     
+     print(square(25))
+
+
+
+
+
+
+
+
+
+
+
+
+     if len(sys.argv)<2:
+         sys.exit("Please tell me your name")
+     
+     name = sys.argv[1]
+     print(f"Hello, { name }")
+
+
+
+     for planet in ["merkurius", "venus", "maa", "mars"]:
+         print(planet)
+
+
+
+
+
+
+
+
+
+def square(x):
+    return x*x
+
+def cube(x):
+    return x*x*x
+
+def main():
+    print(square(2))
+    print(cube(2))
+    print(x)
+
+main()
+
+
+
+
+
+
+
+
+
+
+
+
+         def greet(name="Anomuumi", greeting="Hyvää päivää"):
+             return f"{ greeting }, { name }"
+         
+         print(greet(greeting="Heeeelloooo, "))
+         print(greet("Tero"))
+
+
+def greet(name="Anomuumi"):
+    return f"Hei, { name }"
+
+name = "Tero"
+print(greet(name=name))
+
+
+         

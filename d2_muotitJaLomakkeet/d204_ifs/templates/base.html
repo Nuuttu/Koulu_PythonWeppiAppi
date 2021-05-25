@@ -35,5 +35,19 @@
 				<p>se on nolla</p>
 			{% endif %}
 		</div>
+		<div>
+		<p>{{ day }}</p>
+			{% for weekday in weekdays %}
+			<p>
+				{{ weekday }}
+				{{ loop.index }}
+				
+				{% if loop.index|int == day+1|int %}
+					
+				&lt;&lt;&lt;&lt;&lt; Today is
+				{% endif %}
+			</p>
+			{% endfor %}
+		</div>
 	</body>
 </html>

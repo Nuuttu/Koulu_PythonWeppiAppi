@@ -5,9 +5,10 @@
 		<title>{{siteTitle}}</title>
 	</head>
 	<body>
-		<h1>Moi, {{name}}!</h1>
+		<h1>Moi, {{ name }}!</h1>
+		<div id='content'>{% block content %}{% endblock %}</div>
 		{% for thing in listOfThings %}
-			<p> {{thing }} </p>
+			<p> {{ thing }} </p>
 		{% endfor %}
 	</body>
 </html>

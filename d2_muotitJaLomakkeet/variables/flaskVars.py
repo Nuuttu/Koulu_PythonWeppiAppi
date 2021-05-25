@@ -11,5 +11,10 @@ def index():
     siteTitle=siteTitle,
     listOfThings=listOfThings)
 
+@app.route('/child')
+def child():
+    siteTitle = 'Child page'
+    return render_template('child.html', siteTitle=siteTitle)
+
 if __name__ == '__main__':
     app.run(debug=True)

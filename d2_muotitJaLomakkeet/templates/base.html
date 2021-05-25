@@ -7,6 +7,9 @@
 	</head>
 	<body>
 		<h1>Hei Tuomo</h1>
-		<p> Moi moi </p>
+		<p> {{ message }} </p>
+		 {% for i in range(0,10) %}
+		 	<p>Moi {{ i }} {{message}}</p>
+		 {% endfor %}
 	</body>
 </html>

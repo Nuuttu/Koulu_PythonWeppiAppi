@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang=en>
+	<head>
+		<meta charset="utf-8">
+		<title>{{ title }}</title>
+	</head>
+	<body>
+		<h1>Hi</h1>
+		<div>
+			{% block content %}
+				<p>This is base block</p>
+			{% endblock content %}
+			{% if cars %}
+				<p>there are cars</p>
+			{% else %}
+				<p>no cars here</p>
+			{% endif %}
+
+			{% if bikes %}
+				<p>there are bikes</p>
+			{% else %}
+				<p>no bikes here</p>
+			{% endif %}
+
+			{% if luku %}
+				<p>se ei ole nolla</p>
+			{% else %}
+				<p>se on nolla</p>
+			{% endif %}
+		</div>
+	</body>
+</html>

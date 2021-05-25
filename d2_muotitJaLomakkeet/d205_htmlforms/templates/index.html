@@ -30,15 +30,18 @@
 </form>
 
 <p> Checkbox juttu </p>
-<form method=GET>
-	<div>
-		<input type="checkbox" name="check" id="check">
-		<label for="check"> Checkbox</label>
-	</div>
-	<div>
-		<input type="checkbox" name="toinen box" id="boxtwo">
-		<label for="boxtwo"> toinen box</label>
-	</div>
-	<input type="submit">
-</form>
+<fieldset>
+	<form method=GET>
+		<legend>Check boxes</legend>
+		<div>
+			<input type="checkbox" name="check" id="check">
+			<label for="check"> Checkbox</label>
+		</div>
+		<div>
+			<input type="checkbox" name="toinen box" id="boxtwo">
+			<label for="boxtwo"> toinen box</label>
+		</div>
+		<input type="submit">
+	</form>
+</fieldset>
 {% endblock content %}

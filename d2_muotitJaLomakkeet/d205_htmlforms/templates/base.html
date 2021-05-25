@@ -4,15 +4,15 @@
 		<meta charset="utf-8">
 		<title>
 		{% if title %}
-			{{ title }}
+		{{ title }}
 		{% else %}
-			{% set title ="if ifblock" %}
-			{{ title }}
+		{% block title %}
+		{% endblock title %} 
 		{% endif %}
 		</title>
 	</head>
 	<body>
-		<h1>Hi</h1>
+		<h1>{{ self.title() }}</h1>
 		<div>
 			{% block content %}
 				<p>This is base block</p>

@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 
+{% block title %}
+form get post check
+{% endblock title %}
+
 {% block content %}
 <p> TÄSSÄ on content block, josta löytyy formeja </p>
 
 <form method=GET>
 	Get this:<br>
 	<input type="text" name="g"><br>
+	Date:<br>
+	<input type="date" name="fday"><br>
 	<input type="submit">
 </form>
 <br>
@@ -17,10 +23,11 @@
 	<input type="submit">
 </form>
 <br>
-<form action="" method=GET>
+<form method=GET>
 	<div>
-		<label for="name"> Your name please: </label>
-		<input type="text" name="name">
+		<label> Your name please:
+		<input type="text" name="name" id="name">
+		 </label>
 	</div>
 	<div>
 		<label for="email"> Your email please: </label>
@@ -28,11 +35,11 @@
 	</div>
 	<input type="submit">
 </form>
+<br>
 
-<p> Checkbox juttu </p>
 <fieldset>
+<legend>Check boxes</legend>
 	<form method=GET>
-		<legend>Check boxes</legend>
 		<div>
 			<input type="checkbox" name="check" id="check">
 			<label for="check"> Checkbox</label>

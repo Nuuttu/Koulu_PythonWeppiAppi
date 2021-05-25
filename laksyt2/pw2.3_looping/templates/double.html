@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+double
+{% endblock title %}
+
+{% block content %}
+
+Double
+<br>
+<ol>
+{% for i in range(0,2) %}
+	{% for rotu in koirarotuja %}
+	<li>{{ rotu }}</li>
+	{% endfor %}
+{% endfor %}
+<ol>
+
+{% endblock content %}

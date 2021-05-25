@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p> TÄSSÄ index block content </p>
+
+<form method=GET>
+	Get this:<br>
+	<input type="text" name="g"><br>
+	<input type="submit">
+</form>
+<br>
+<form method=POST>
+	name:<br>
+	<input type="text" name="name"><br>
+	password:<br>
+	<input type="password" name="password"><br>
+	<input type="submit">
+</form>
+{% endblock content %}

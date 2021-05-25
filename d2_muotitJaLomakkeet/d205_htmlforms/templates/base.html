@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang=en>
+	<head>
+		<meta charset="utf-8">
+		<title>
+		{% if title %}
+			{{ title }}
+		{% else %}
+			{% set title ="if ifblock" %}
+			{{ title }}
+		{% endif %}
+		</title>
+	</head>
+	<body>
+		<h1>Hi</h1>
+		<div>
+			{% block content %}
+				<p>This is base block</p>
+			{% endblock content %}
+			
+		</div>
+	</body>
+</html>

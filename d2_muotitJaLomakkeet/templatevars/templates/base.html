@@ -2,10 +2,11 @@
 <html lang=en>
 	<head>
 		<meta charset="utf-8">
-		<title></title>
+		<title>{% block title %}basetitle{% endblock title %}</title>
 	</head>
 	<body>
 		<h1>Hi</h1>
+		<p>{{ name|lower }}</p>
 		<div>
 			{% block content %}
 				<p>This is base block</p>

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+bmi calc
+{% endblock title %}
+
+{% block content %}
+<p> Hei block named content</p>
+
+<form method=POST>
+	BMI post:<br>
+	<label>Enter your kg
+	<input type="text" name="kg" id="kg" required></label><br>
+	<label>Enter your cm
+	<input type="text" name="cm" id="cm" required></label><br>
+	<input type="submit">
+</form>
+<p> Your BMI is {{ bmi }} </p>
+{% endblock content %}

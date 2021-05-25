@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+big POST form
+{% endblock title %}
+
+{% block content %}
+<fieldset>
+<legend>Fieldset where there is a form inside</legend>
+	<form method=POST>
+		<label for="name">Name here: </label><br>
+		<input type="text" name="name"><br><br>
+		<label>Date:<input type="date" name="fday"></label><br><br>
+		<label>Check out this box with this text: <input type="checkbox" name="box"></label><br><br>
+		<label for="password">Enter a password: </label><br>
+		<input type="password" name="password"><br>
+		<input type=hidden name="hiddenInput" value="hiddenValue"><br>
+		<label for="email"> Your email please: </label><br>
+		<input type="email" name="email" id="email"><br>
+				
+		<br>
+		<input type="submit">
+	</form>
+</fieldset>
+
+
+{% endblock content %}

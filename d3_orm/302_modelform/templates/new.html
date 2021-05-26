@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}
+new page
+{% endblock title %}
+
+{% block content %}
+<a href="./">not now</a>
+<p>New Comment:</p>
+<form method="POST">
+	{% for field in form %}
+	<p>{{ field.label }}: {{ field }}</p>
+	{% endfor %}
+	<input type=submit>
+</form>
+{% endblock content %}

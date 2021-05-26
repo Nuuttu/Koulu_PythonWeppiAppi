@@ -9,7 +9,9 @@ new page
 <p>New Comment:</p>
 <form method="POST">
 	{% for field in form %}
+	{% if not field.flags.hidden %}
 	<p>{{ field.label }}: {{ field }}</p>
+	{% endif %}
 	{% endfor %}
 	<input type=submit>
 </form>

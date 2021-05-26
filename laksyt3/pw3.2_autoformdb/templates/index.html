@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% set title="index title" %}
+
+{% block content %}
+
+<ul>
+	{% for todo in todos %}
+	<li>
+	task: {{ todo.task }}, time: {{ todo.time}}
+	</li>
+	{% endfor %}
+</ul>
+{% endblock content %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% set title="Adding page" %}
+{% block content %}
+
+<p>New Task:</p>
+<form method="POST">
+	{% for field in form %}
+	<p>
+		{% if not field.flags.hidden %}
+			{{ field.label }}:
+		{% endif %}
+		{{ field }}
+	</p>
+	{% endfor %}
+<input type=submit>
+</form>
+
+{% endblock content %}

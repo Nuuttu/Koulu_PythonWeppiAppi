@@ -28,8 +28,14 @@ def bfr():
 
 @app.route('/flash')
 def flashMe():
-    flash("Flashed")
+    flash("ErrorFlashed")
     return redirect("/")
+
+@app.route('/flashcat')
+def flashMeWithCat():
+    flash("ErrorFlashed", "Catergorized")
+    return redirect("/")
+
 
 @app.route('/add', methods=["GET", "POST"])
 def addForm():

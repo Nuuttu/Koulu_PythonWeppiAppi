@@ -11,13 +11,23 @@
 		<nav>
 			<a href="/">Index</a> -
 			<a href="/flash">Flash</a> -
+			<a href="/flashcat">Flash with category</a>
 
 		</nav>
-		{% if get_flashed_messages() %}
-			{% for message in get_flashed_messages() %}
-			<p>The message that got flashed: &gt;&gt;&gt;&gt; {{ message }} &lt;&lt;&lt;&lt;&lt;</p>
-			{% endfor %}
-		{% endif%}
+
+		
+		{% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+				{% for category, message in messages %}
+					<p>The message that got flashed: 
+					&gt;&gt;&gt;&gt; {{ message }} &lt;&lt;&lt;&lt;&lt;</p>
+
+					<p>and the category was: {{ category }}</p>
+					
+				{% endfor %}
+			{% endif%}
+		{% endwith %}
+			
 		{% block content %}
 		base content
 		{% endblock content %}

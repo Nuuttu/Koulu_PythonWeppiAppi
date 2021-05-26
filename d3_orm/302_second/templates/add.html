@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+add page
+{% endblock title %}
+
+{% block content %}
+<a href="./">pack to index</a>
+<p>New Task:</p>
+<form method="POST">
+	{% for field in form %}
+		{% if not field.flags.hidden %}
+		<p>{{ field.label }}: {{ field }}</p>
+		{% endif %}
+	{% endfor %}
+<input type=submit>
+</form>
+
+{% endblock content %}

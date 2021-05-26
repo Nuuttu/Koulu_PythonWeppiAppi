@@ -22,6 +22,7 @@ def initMe():
 @app.route('/')
 def base():
     coffees = Coffee.query.all()
+
     return render_template("index.html", coffees=coffees)
 
 if __name__=="__main__":

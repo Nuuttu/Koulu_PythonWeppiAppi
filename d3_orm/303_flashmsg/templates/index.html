@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}
+index page
+{% endblock title %}
+
+{% block content %}
+<a href="./add">add task</a>
+<ul>
+	{% for todo in todos %}
+	<li>
+	task: {{ todo.task }}, time for the task: {{ todo.time}}min
+	</li>
+	{% endfor %}
+</ul>
+{% endblock content %}

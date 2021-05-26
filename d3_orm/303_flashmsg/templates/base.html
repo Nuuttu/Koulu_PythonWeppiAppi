@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang=en>
+	<head>
+		<meta charset="utf-8">
+		<title>{% block title %}base title{% endblock title %}</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+	</head>
+	
+	<body>
+		<h1>{{ self.title() }}</h1>
+		<nav>
+			<a href="/">Index</a> -
+			<a href="/flash">Flash</a> -
+
+		</nav>
+		{% if get_flashed_messages() %}
+			{% for message in get_flashed_messages() %}
+			<p>The message that got flashed: &gt;&gt;&gt;&gt; {{ message }} &lt;&lt;&lt;&lt;&lt;</p>
+			{% endfor %}
+		{% endif%}
+		{% block content %}
+		base content
+		{% endblock content %}
+	</body>
+</html>

@@ -15,9 +15,7 @@ def initMe():
 
     comment = Comment(text="This is a comment", name="Tuomo")
     db.session.add(comment)
-
-    comment = Comment(text="This is the second comment", name="Tarmo")
-    db.session.add(comment)
+    db.session.add(Comment(text="This is the second comment", name="Tarmo"))
 
     db.session.commit()
 

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+index page
+{% endblock title %}
+
+{% block content %}
+<p>dump truck</p>
+
+<ul>
+	{% for comment in comments %}
+	<li>
+	{{ comment.name }}: {{ comment.text}}
+	</li>
+	{% endfor %}
+</ul>
+{% endblock content %}

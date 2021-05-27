@@ -46,6 +46,11 @@ def addAnimal(id=None):
         return redirect("/")
     return render_template("addAnimal.html", form=form, operationMsg=operationMsg)
 
+@app.route("/confirmation/<int:id>")
+def conf(id):
+    animal = Animal.query.get_or_404(id)
+    return render_template("confirmation.html", animal=animal)
+
 @app.route("/delete/<int:ID>", methods=["GET", "DELETE"]) ###
 def deleteAnimal(ID):
     animal = Animal.query.get_or_404(ID)

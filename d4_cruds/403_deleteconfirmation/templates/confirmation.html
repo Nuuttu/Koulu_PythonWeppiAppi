@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% set title="Delete?" %}
+
+{% block content %}
+
+<p> Delete this animal? </p>
+	<p>
+	<b>{{ animal.name }}</b><br><br>
+	<a href="/"> No :)</a><br>
+	<a href="/delete/{{ animal.id }}">Yes :(</a> 
+	</p>
+
+{% endblock content %}

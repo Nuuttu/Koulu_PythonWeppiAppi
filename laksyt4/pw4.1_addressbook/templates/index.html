@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% set title="Addressbook" %}
+
+{% block content %}
+<p> Contacts </p>
+{% for contact in contactlist %}
+	<p><b>{{ contact.firstname }} {{ contact.lastname }}</b>
+		- {{ contact.address }}. {% if contact.indebt %} Owes me a favor. {% endif %}
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="/modify/{{ contact.id }}">Modify contact</a> - 
+		<a href="/confirmation/{{ contact.id }}">Delete contact</a> 
+	</p>
+{% endfor %}
+{% endblock content %}

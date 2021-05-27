@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% set title="animals html" %}
+
+{% block content %}
+<p> animals </p>
+
+{% for animal in animals %}
+<p><b>{{ animal.name }}</b> has <b>{{ animal.numberOfLegs }}</b> legs. But does this animal have a tail? <b>{{ animal.tail }}</b></p>
+{% endfor %}
+
+{% endblock content %}

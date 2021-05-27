@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% set title="add a animal" %}
+
+{% block content %}
+<p> add animal </p>
+<form method=post>
+	{% for field in form %}
+	<p>
+		{% if not field.flags.hidden %}
+			{{ field.label }}: 
+		{% endif %}
+		{{ field }}
+	</p>
+	{% endfor %}
+	
+	<input type=submit>
+</form>
+{% endblock content %}

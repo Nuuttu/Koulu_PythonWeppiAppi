@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% set title="Edit Todo" %}
+{% block content %}
+
+<p><b>Edit {{ todo.task }} Task:</b></p>
+<form method="POST">
+	{% for field in form %}
+	<p>
+		{% if not field.flags.hidden %}
+			{{ field.label }}:
+		{% endif %}
+		 {{ field }}</p>
+		
+	{% endfor %}
+<input type=submit>
+</form>
+{% endblock content %}

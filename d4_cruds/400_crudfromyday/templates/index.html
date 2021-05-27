@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% set title="Todo list" %}
+
+{% block content %}
+<table>
+	<tr>
+		<th>Task</th>
+		<th>Time</th>
+		<th>Edit</th>
+		<th>Delete</th>
+	</tr>
+
+	{% for todo in todos %}
+	<tr>
+		<td> {{ todo.task }}</td>
+		<td> {{ todo.time }}</td>
+		<td><a href="/edit/{{todo.id}}" >Edit {{ todo.id }}</a></td>
+		<td><a href="/delete/{{todo.id}}" >Delete {{ todo.id }}</a></td>
+	</tr>
+	{% endfor %}
+
+</table>
+
+{% endblock content %}

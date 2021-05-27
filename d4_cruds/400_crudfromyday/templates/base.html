@@ -1,0 +1,32 @@
+{% if not title %}
+	{% set title="Base title"%}
+{% endif %}
+
+<!doctype html>
+<html lang=en>
+	<head>
+		<meta charset="utf-8">
+		<title>{{ title }}</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+	</head>
+	
+	<body>
+		<h1>{{ title }}</h1>
+		<nav>
+			<a href="/">Index</a> -
+			<a href="/add">Add Task</a>
+		</nav>
+
+		{% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+				{% for category, message in messages %}
+					<p>{{ message }}</p>				
+				{% endfor %}
+			{% endif%}
+		{% endwith %}
+			
+		{% block content %}
+		base content
+		{% endblock content %}
+	</body>
+</html>

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% set title="Index title" %}
+
+{% block content %}
+<p>List of movies I have seen</p>
+{% for movie in movies %}
+	<p>{{ movie.name }} - watched: {{ movie.date }}</p>
+{% endfor %}
+{% endblock content %}

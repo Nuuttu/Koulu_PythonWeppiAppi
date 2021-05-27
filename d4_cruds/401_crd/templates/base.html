@@ -1,0 +1,21 @@
+{% if not title %}
+	{% set title="base title" %}
+{% endif %}
+
+<!doctype html>
+<html lang=en>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport", content="width=device-width, initial-scale=1">
+		<title>{{ title }}</title>
+	</head>
+	<body>
+		<nav>
+			<a href="/">Index</a> - 
+			<a href="/add">Add</a>
+		</nav>
+		{% block content %}
+			<p>base</p>
+		{% endblock content %}
+	</body>
+</html>

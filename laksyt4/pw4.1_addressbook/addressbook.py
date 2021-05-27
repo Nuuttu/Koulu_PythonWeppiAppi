@@ -12,6 +12,8 @@ class Contact(db.Model):
     firstname = db.Column(db.String, nullable=False)
     lastname = db.Column(db.String, nullable=False)
     address = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False)
+    phone = db.Column(db.String, nullable=True)
     indebt = db.Column(db.Boolean, nullable=True)
 
 ContactForm = model_form(Contact,

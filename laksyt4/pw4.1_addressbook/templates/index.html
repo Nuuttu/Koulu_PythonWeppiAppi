@@ -4,12 +4,28 @@
 
 {% block content %}
 <p> Contacts </p>
+<table>
+	<tr>
+		<th>Firstname</th>
+		<th>Lastname</th>
+		<th>Address</th>
+		<th>Email</th>
+		<th>Phone</th>
+		<th>Owes me</th>
+		<th>Modify</th>
+		<th>Delete</th>
+	</tr>
 {% for contact in contactlist %}
-	<p><b>{{ contact.firstname }} {{ contact.lastname }}</b>
-		- {{ contact.address }}. {% if contact.indebt %} Owes me a favor. {% endif %}
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<a href="/modify/{{ contact.id }}">Modify contact</a> - 
-		<a href="/confirmation/{{ contact.id }}">Delete contact</a> 
-	</p>
+	<tr>
+		<td>{{ contact.firstname }}</td>
+		<td>{{ contact.lastname }}</td>
+		<td>{{ contact.address }}</td>
+		<td>{{ contact.email }}</td>
+		<td>{{ contact.phone }}</td>
+		<td>{% if contact.indebt %} x {% endif %}</td>
+		<td><a href="/modify/{{ contact.id }}">Modify contact</a> - </td>
+		<td><a href="/confirmation/{{ contact.id }}">Delete contact</a> </td>
+	</tr>
 {% endfor %}
+</table>
 {% endblock content %}

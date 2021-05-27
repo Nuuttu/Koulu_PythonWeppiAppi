@@ -11,7 +11,7 @@ class Animal(db.Model): #
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     numberOfLegs = db.Column(db.Integer, nullable=False)
-    tail = db.Column(db.Boolean, nullable=False)
+    tail = db.Column(db.Boolean, nullable=True)
 
 AnimalForm = model_form(Animal,
     base_class=FlaskForm, db_session=db.session) ####
@@ -27,17 +27,32 @@ def base():
     animals = Animal.query.all()
     return render_template("index.html", animals=animals)
 
+@app.route("/modify/<int:id>", methods=["GET", "POST"])
 @app.route("/addAnimal", methods=["GET", "POST"])
-def addAnimal():
-    form = AnimalForm()
+def addAnimal(id=None):
+    flashmsg = "Added"
+    operationMsg = "Add a animal"
+    animal = Animal()
+    if id:
+        animal = Animal.query.get_or_404(id)
+        flashmsg = "Modified"
+        operationMsg = "Modify animal - " + animal.name
+    form = AnimalForm(obj=animal)
     if form.validate_on_submit(): ##
-        animal = Animal()
         form.populate_obj(animal)
         db.session.add(animal)
         db.session.commit()
-        flash("Added")
+        flash(flashmsg)
         return redirect("/")
-    return render_template("addAnimal.html", form=form)
+    return render_template("addAnimal.html", form=form, operationMsg=operationMsg)
+
+@app.route("/delete/<int:ID>", methods=["GET", "DELETE"]) ###
+def deleteAnimal(ID):
+    animal = Animal.query.get(ID)
+    db.session.delete(animal)
+    db.session.commit()
+    flash("Animal deleted :(")
+    return redirect("/")
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -10,13 +10,16 @@
 		<title>{{ title }}</title>
 	</head>
 	<body>
+		<h1>Animal page</h1>
 		<nav>
 		<a href="/">Index</a> - 
 		<a href="/addAnimal">Add a animal</a>
 		</nav>
-	
-	{% block content %}
+			{% for message in get_flashed_messages() %}
+				{{ message }}
+			{% endfor %}
+		{% block content %}
 		<p> base moo</p>
-	{% endblock content %}
+		{% endblock content %}
 	</body>
 </html>

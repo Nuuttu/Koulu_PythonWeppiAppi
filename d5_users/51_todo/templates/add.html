@@ -1,0 +1,14 @@
+{% set title="Todos and Tasks" %}
+{% extends "base.html" %}
+
+
+
+{% block content %}
+	<h3>{{ pageTitle }}</h3>
+	<form method=post>
+		{% for field in form %}
+			<p>{{ field.label if not field.flags.hidden }} {{ field }}</p>
+		{% endfor %}
+		<input type=submit>
+	</form>
+{% endblock content %}

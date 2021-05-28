@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% set title="Delete?" %}
+
+{% block content %}
+
+<p> Delete this contact? </p>
+<p>
+	<b>{{ contact.firstname }} {{ contact.lastname }}</b><br><br>
+	<a href="/"> No</a><br>
+	<a href="/delete/{{ contact.id }}">Yes</a> 
+</p>
+
+{% endblock content %}

@@ -1,0 +1,19 @@
+{% set title="Todos and Tasks" %}
+{% extends "base.html" %}
+
+
+
+{% block content %}
+	<h3>Tasks:</h3>
+	{% if not todos %}
+		<p>No todos here</p>
+	{% endif %}
+	<ul>
+	{% for todo in todos %}
+		<li>{{ todo.task }}
+		 - <a href="/todo/{{ todo.id }}/edit">Edit</a>
+		 - <a href="/todo/{{ todo.id }}/delete">Delete</a>
+		</li>
+	{% endfor %}
+	</ul>
+{% endblock content %}

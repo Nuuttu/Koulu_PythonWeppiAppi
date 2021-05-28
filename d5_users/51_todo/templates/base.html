@@ -10,17 +10,23 @@
 		<title>{{ title }}</title>
 	</head>
 	<body>
-		<nav>
-			<a href="/">Todos</a> - 
-			<a href="/todo/add">Add Todo</a> -
-			<a href="/register">Register</a> - 
-			<a href="/login">Login</a>
-		</nav>
-		<h1>{{ title }}</h1>
+
 		{% for message in get_flashed_messages() %}
 			<p> &gt; {{ message }}</p>
 		{% endfor %}
-
+		
+		<nav>
+			<a href="/">Todos</a> - 
+			<a href="/todo/add">Add Todo</a> -
+			{% if currentUser() %}
+			<a href="/logout">Logout</a> - 
+				{{ currentUser().email }}
+			{% else %}
+			<a href="/register">Register</a> - 
+			<a href="/login">Login</a>
+			{% endif %}
+		</nav>
+		<h1>{{ title }}</h1>
 		{% block content %}
 		<p>body</p>
 		{% endblock content %}

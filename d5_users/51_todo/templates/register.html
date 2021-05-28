@@ -1,4 +1,4 @@
-{% set title="Todos and Tasks - Register" %}
+{% set title="Register - Todos and Tasks" %}
 {% extends "base.html" %}
 
 
@@ -8,6 +8,11 @@
 	<form method=post>
 		{% for field in form %}
 			<p>{{ field.label if not field.flags.hidden }} {{ field }}</p>
+
+				{% for error in field.errors %}
+					<p>{{ error }}</p>
+				{% endfor %}
+
 		{% endfor %}
 		<input type=submit>
 	</form>

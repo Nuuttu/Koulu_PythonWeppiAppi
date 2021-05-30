@@ -1,0 +1,39 @@
+{% set title="Book of 160" %}
+{% extends "base.html" %}
+
+
+
+{% block content %}
+	{% if currentUser() and not chapters %}
+		<p>No todos here, start by <a href="/todo/add">Adding a chapter</a></p>
+	{% else %}
+		<h3>Book so far: </h3>
+	{% endif %}
+	
+	{% for chapter in chapters %}
+		<p>{{ chapter.text }}</p>
+		{% for user in users %}
+			{% if user.id  == chapter.owner %}
+					<p>	- Writer: {{ user.username }}
+				
+				{% if currentUser().id == chapter.owner and currentUser().id == user.id %}
+					 - <a href="/chapter/{{ chapter.id }}/edit">Edit</a>
+					 - <a href="/chapter/{{ chapter.id }}/delete">Delete</a>
+				 {% endif %}
+			 {% endif %}
+			</p>
+		{% endfor %}
+	{% endfor %}
+	{% if currentUser() %}
+	<form method=post>
+		{% for field in form %}
+			{{ field.label if not field.flags.hidden }} {{ field }}
+		{% endfor %}
+		<input type=submit>
+	</form>	
+	{% else %}
+	<br>
+	<p>Login to add a chapter for this story</p>
+	{% endif %}
+{% endblock content %}
+

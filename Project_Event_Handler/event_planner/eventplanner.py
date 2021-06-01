@@ -8,20 +8,21 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key="cvhQr6otEjf8O8YdSO6U7liDu6ycoz"
+app.config["SQLALCHEMY_DATABASE_URI"]='postgresql:///tuomo'
 db = SQLAlchemy(app)
 
-class Todo(db.Model):
+class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    userId = db.Column(db.Integer, foreign_key="User.id")
+    userId = db.Column(db.Integer, foreign_key=True, nullable=False)
     roomId = db.Column(db.Integer, foreign_key=True, nullable=True)
     task = db.Column(db.String, nullable=False)
     c_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
-TodoForm = model_form(Todo, base_class=FlaskForm, db_session=db.session, exclude = ["userId", "roomId", "c_date"])
+TaskForm = model_form(Task, base_class=FlaskForm, db_session=db.session, exclude = ["userId", "roomId", "c_date"])
 
-class User(db.Model):
+class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String, nullable=False, unique=True)
+    username = db.Column(db.String, nullable=False, unique=True)
     passwordHash = db.Column(db.String, nullable=False)
 
     def setPassword(self, password):
@@ -32,47 +33,32 @@ class User(db.Model):
 
     
 
-class UserForm(FlaskForm):
-    email = StringField("Email", validators=[validators.Email()])
+class UsersForm(FlaskForm):
+    username = StringField("Username", validators=[validators.InputRequired()])
     password = PasswordField("Password", validators=[validators.InputRequired()])
 
 class RegisterForm(FlaskForm):
-    email = StringField("Email", validators=[validators.Email()])
+    username = StringField("Username", validators=[validators.InputRequired()])
     password = PasswordField("Password", validators=[validators.InputRequired()])
     registerKey = StringField("Registration Key", validators=[validators.InputRequired()])
 
-#rooms = db.Table("rooms",
-#    db.Column("room_id", db.Integer, db.ForeignKey("room.id"), primary_key=True),
-#    db.Column("user_id", db.Integer, db.ForeignKey("user.id"), primary_key=True)
-#)
-############################ under construction
+
 
 
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
-    owner = db.Column(db.Integer, db.ForeignKey("user.id"))
+    owner = db.Column(db.Integer, foreign_key=True, nullable=False)
 
 class RoomForm(FlaskForm):
-    name = StringField("Create a room: ", validators=[validators.InputRequired()])
+    name = StringField("Create an Event: ", validators=[validators.InputRequired()])
     
-class Member(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, foreign_key=True, nullable=False)
-    room_id = db.Column(db.Integer, foreign_key=True, nullable=False)
+#####################################
+##########################################################################################
+##########################################################################################
 
-##########################################################################################
-##########################################################################################
-##########################################################################################
-class MemberForm(FlaskForm):
-    userName = StringField("name a new member: ", validators=[validators.InputRequired()])
-    submit = SubmitField('submit')
 
-    def setUser(self, user):
-        self.user_id = User.query.filter_by(name=name).first()
-        
-    def setRoom(self, roomid):
-        self.room_id = Room.query.get_or_404(roomid)
+    
 
     #members = db.Column("myarray", ARRAY(Integer))
     #rooms = db.relationship("room", secondary=rooms, lazy="subquery", backref=db.backref('rooms', lazy=True))
@@ -80,14 +66,14 @@ class MemberForm(FlaskForm):
 
 
 
-## CurrentUser config
+## CurrentUsers config
 
 def currentUser():
     try:
         uid = int(session["uid"])
     except:
         return None
-    return User.query.get(uid)
+    return Users.query.get(uid)
 
 app.jinja_env.globals["currentUser"] = currentUser
 
@@ -112,20 +98,20 @@ app.jinja_env.globals["currentRoom"] = currentRoom
 ## user view
 
 @app.route("/register", methods=["GET", "POST"])
-def registerUser():
+def registerUsers():
     form = RegisterForm()
     if form.validate_on_submit():
-        email = form.email.data
+        username = form.username.data
         password = form.password.data
         registerKey = form.registerKey.data
 
-        if User.query.filter_by(email=email).first():
-            flash("User already exist. Log in")
+        if Users.query.filter_by(username=username).first():
+            flash("Users already exist. Log in")
             return redirect("/login")
         if not registerKey == "cube":
             flash("Wrong register key. You need to know this in order to register.")
             return redirect("/register")
-        user = User(email=email)
+        user = Users(username=username)
         user.setPassword(password)
 
         db.session.add(user)
@@ -138,13 +124,13 @@ def registerUser():
 
 
 @app.route("/login", methods=["GET", "POST"])
-def loginUser():
-    form = UserForm()
+def loginUsers():
+    form = UsersForm()
     if form.validate_on_submit():
-        email = form.email.data
+        username = form.username.data
         password = form.password.data
         
-        user = User.query.filter_by(email=email).first()
+        user = Users.query.filter_by(username=username).first()
         if not user:
             flash("Login failed.")
             return redirect("/login")
@@ -153,14 +139,14 @@ def loginUser():
             return redirect("/login")
         
         session["uid"]=user.id
-        flash("Login success. Hello " + currentUser().email)
+        flash("Login success. Hello " + currentUser().username)
         return redirect("/")
         
     return render_template("login.html", form=form)
 
 
 @app.route("/logout")
-def logoutUser():
+def logoutUsers():
     session["uid"] = None
     session["rid"] = None
     flash("Logged out.")
@@ -194,36 +180,46 @@ def leaveRoom():
 @app.before_first_request
 def initDb():
     db.create_all()
-    db.session.add(Todo(task="Run", userId=1))
-    db.session.add(Todo(task="All I Need", userId=1, roomId=1))
-    db.session.add(Todo(task="All", userId=2, roomId=1))
-    db.session.add(Room(name="First Room", owner=1))
-    db.session.add(Room(name="Second Room", owner=2))
-    user = User(email="asd@asd.asd")
-    user.setPassword("asd")
-    db.session.add(user)
-    user = User(email="qwe@qwe.qwe")
-    user.setPassword("qwe")
-    db.session.add(user)
-    user = User(email="zxc@zxc.zxc")
-    user.setPassword("zxc")
-    db.session.add(user)
-    db.session.commit()
+    #db.session.add(Task(task="Run", userId=1))
+    #db.session.add(Task(task="All I Need", userId=1, roomId=1))
+    #db.session.add(Task(task="All", userId=2, roomId=1))
+    #db.session.add(Room(name="First Room", owner=1))
+    #db.session.add(Room(name="Second Room", owner=2))
+    #user = Users(username="asd@asd.asd")
+    #user.setPassword("asd")
+    #db.session.add(user)
+    #user = Users(username="qwe@qwe.qwe")
+    #user.setPassword("qwe")
+    #db.session.add(user)
+    #user = Users(username="zxc@zxc.zxc")
+    #user.setPassword("zxc")
+    #db.session.add(user)
+    #db.session.commit()
 
 
 ## Main view
 
 @app.route("/")
 def base():
-    helloMessage = "Hello, please login or register for Tasks and Todos!"
+    helloMessage = "Hello, please login or register for Eventplanner!"
     if currentUser():
-        todos = Todo.query.filter_by(userId=currentUser().id)
-        if Todo.query.filter_by(userId=currentUser().id).count() == 0:
+        tasks = Task.query.filter_by(userId=currentUser().id)
+        if Task.query.filter_by(userId=currentUser().id).count() == 0:
             return render_template("index.html")
         else:
-            return render_template("index.html", todos=todos)
+            return render_template("index.html", tasks=tasks)
     return render_template("index.html")
 #### form.request add_member
+
+@app.route("/eventview")
+def eventView():
+    loggedIn()
+    tasks = Task.query.filter_by(roomId=currentRoom().id)
+    if Task.query.filter_by(roomId=currentRoom().id).count() == 0:
+        return render_template("eventview.html")
+    else:
+        return render_template("eventview.html", tasks=tasks)
+    
 
 @app.errorhandler(404)
 def custom404(e):
@@ -244,13 +240,13 @@ def rooms(ID=None):
         form.populate_obj(room)
         room.owner = currentUser().id
         if Room.query.filter_by(name=room.name).first():
-            flash("Room in use. Use different name.")
+            flash("Event already created. Use different name or join excisting.")
             return redirect("/rooms")
         db.session.add(room)
         db.session.commit()
     if "joinroom" in request.form:
         if not Room.query.filter_by(name=request.form["joinroom"]).first():
-            flash("Can't find that room")
+            flash("Can't find that event")
             return redirect("/rooms")
         roomname = request.form["joinroom"]
         print (roomname + "...")
@@ -258,20 +254,8 @@ def rooms(ID=None):
         roomtojoin = "/joinroom/" + str(room.id)
         return redirect(roomtojoin)
     rooms = Room.query.filter_by(owner=currentUser().id)
-    ##########################################################################################
-    ##########################################################################################
-    ##########################################################################################
-    memberform = MemberForm()
-    if memberform.validate_on_submit() and currentRoom():
-        member = Member()
-        newMember = User.query.filter_by(name=memberform.name).first()
-        member.setUserId(newMember.id)
-        member.serRoomId(currentRoom().id)
-        db.session.add(member)
-        db.session.commit()
-        flash("added member to this room")
-        return redirect("/rooms")
-    return render_template("rooms.html", rooms=rooms, form=form, memberform=memberform)
+    
+    return render_template("rooms.html", rooms=rooms, form=form)
 
 @app.route("/rooms/delete/<int:id>")
 def deleteRoom(id):
@@ -294,52 +278,54 @@ def removeRoom(id):
     return redirect("/rooms")
 
 
-@app.route("/todo/<int:id>/edit", methods=["GET", "POST"])
-@app.route("/todo/add", methods=["GET", "POST"])
-def addTodo(id=None):
+@app.route("/task/<int:id>/edit", methods=["GET", "POST"])
+@app.route("/task/add", methods=["GET", "POST"])
+def addTask(id=None):
     if not currentUser():
         abort(403)
-    todo = Todo()
-    todo.userId = currentUser().id
+    task = Task()
+    task.userId = currentUser().id
     if currentRoom():
-        todo.roomId = currentRoom().id
-    message = "Add a new Todo"
-    flashmessage = "Added Todo: "
-    pageTitle = "Add Todo"
+        task.roomId = currentRoom().id
+    message = "Add a new Task"
+    flashmessage = "Added Task: "
+    pageTitle = "Add Task"
     if id:
-        todo = Todo.query.get_or_404(id)
-        if currentUser().id != todo.userId:
+        task = Task.query.get_or_404(id)
+        if currentUser().id != task.userId:
             abort(403)  
-        message = "Edit Todo: " + todo.task
-        flashmessage = "Edited " + todo.task  +" -> "
-        pageTitle = "Edit Todo"
-    form = TodoForm(obj=todo)
+        message = "Edit Task: " + task.task
+        flashmessage = "Edited " + task.task  +" -> "
+        pageTitle = "Edit Task"
+    form = TaskForm(obj=task)
     if form.validate_on_submit():
-        form.populate_obj(todo)
-        db.session.add(todo)
+        form.populate_obj(task)
+        db.session.add(task)
         db.session.commit()
-        flash(flashmessage + todo.task)
+        flash(flashmessage + task.task)
+        if currentRoom():
+            return redirect("/eventview")
         return redirect("/")
     return render_template("add.html", form=form, pageTitle=pageTitle)
 
-@app.route("/todo/<int:id>/delete")
-def deleteTodo(id):
+@app.route("/task/<int:id>/delete")
+def deleteTask(id):
     loggedIn()
-    todo = Todo.query.get_or_404(id)
-    if currentUser().id != todo.userId:
+    task = Task.query.get_or_404(id)
+    if currentUser().id != task.userId:
         abort(403)    
-    return render_template("delete.html", todo=todo)
+    return render_template("delete.html", task=task)
     
 
 @app.route("/<int:id>/annihilate")
-def annihilateTodo(id):
+def annihilateTask(id):
     loggedIn()
-    todo = Todo.query.get_or_404(id)
-    if currentUser().id != todo.userId:
+    task = Task.query.get_or_404(id)
+    if currentUser().id != task.userId:
         abort(403)
-    db.session.delete(todo)
+    db.session.delete(task)
     db.session.commit()
-    flash("Deleted todo: - " + todo.task)
+    flash("Deleted task: - " + task.task)
     return redirect("/")
 
     

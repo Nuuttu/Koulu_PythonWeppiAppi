@@ -1,13 +1,13 @@
-{% set title="Todos and Tasks" %}
+{% set title="Events - Eventplanner" %}
 {% extends "base.html" %}
 
 
 
 {% block content %}
 	{% if currentUser() and not rooms %}
-		<p>No todos here, start by <a href="/todo/add">Adding a Todo</a></p>
+		<p>No events here, start by <a href="/event/add">Adding an Event</a></p>
 	{% else %}
-		<h3>Your Rooms:</h3>
+		<h3>Your Events:</h3>
 	{% endif %}
 	<ul>
 	{% for room in rooms %}
@@ -25,21 +25,16 @@
 	</form>
 	<br>
 	<br>
-	<br>
-	<br>
+	
 	<br>
 	<form method=post>
-		<label>Join a room: 
+		<label>Join an Event: 
 		<input type=text name="joinroom" id="joinroom">
 		</label>
 		<input type=submit>
 		
 	</form>
-	<p>Current Room: {{ currentRoom().name }}</p>
+	<p>Current Event: {{ currentRoom().name }}</p>
 
-	{% if currentRoom() %}	
-		{% for field in memberform %}		
-			{{ field.label if not field.flags.hidden }} {{ field }}
-		{% endfor %}
-	{% endif %}
+	
 {% endblock content %}

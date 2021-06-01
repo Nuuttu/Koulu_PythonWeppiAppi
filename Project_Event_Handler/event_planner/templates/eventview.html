@@ -1,0 +1,28 @@
+{% set title="Event Planner" %}
+{% extends "base.html" %}
+
+
+
+{% block content %}
+	{% if currentRoom() %}
+		<p>You are viewing event: <b>{{ currentRoom().name }}</b> - <a href="/leaveroom">Leave view</a></p>
+	{% endif %}
+
+	{% if not tasks %}
+		<p>No tasks here, start by <a href="/task/add">Adding a task</a></p>
+	{% else %}
+		<h3>Event tasks:</h3>
+	{% endif %}
+	<ul>
+	{% for task in tasks %}
+		<li>{{ task.task }} - created: {{ task.c_date }}
+			{% if currentUser().id == task.userId %}
+		 - <a href="/task/{{ task.id }}/edit">Edit</a>
+		 - <a href="/task/{{ task.id }}/delete">Delete</a>
+			{% endif %}
+		</li>
+	{% endfor %}
+	</ul>
+
+
+{% endblock content %}

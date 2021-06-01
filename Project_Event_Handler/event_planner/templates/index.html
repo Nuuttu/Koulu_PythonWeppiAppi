@@ -1,42 +1,33 @@
-{% set title="Todos and Tasks" %}
+{% set title="Event Planner" %}
 {% extends "base.html" %}
 
 
 
 {% block content %}
 	{% if currentRoom() %}
-		<p>You are in room: <b>{{ currentRoom().name }}</b> - <a href="/leaveroom">Leave Room</a></p>
+		<p>You are viewing event: <b>{{ currentRoom().name }}</b> - <a href="/leaveroom">Leave view</a></p>
 	{% endif %}
-	{% if currentUser() and not todos %}
-		<p>No todos here, start by <a href="/todo/add">Adding a Todo</a></p>
+	{% if currentUser() and not tasks and not currentRoom() %}
+		<p>No tasks here, start by <a href="/rooms">creating an Event</a></p>
 	{% else %}
 		<h3>Your Tasks:</h3>
 	{% endif %}
 	{% if not currentUser() %}
-		<p> You need to Login to start with Todos and Tasks</p>
+		<p> You need to Login to start with Eventplanner</p>
 	{% endif %}
 	<ul>
-	{% for todo in todos %}
-		<li>{{ todo.task }} - created: {{ todo.c_date }}
-		 - <a href="/todo/{{ todo.id }}/edit">Edit</a>
-		 - <a href="/todo/{{ todo.id }}/delete">Delete</a>
+	{% for task in tasks %}
+		<li>{{ task.task }} - created: {{ task.c_date }} - for event: {{ task.roomId }}
+		 - <a href="/task/{{ task.id }}/edit">Edit</a>
+		 - <a href="/task/{{ task.id }}/delete">Delete</a>
 		</li>
 	{% endfor %}
 	</ul>
 
 	{% if currentRoom() %}
-		<p>Todos in this room: </p>
-		{% for todo in todos %}
-			{% if todo.roomId == currentRoom().id %}
-				<p> _ {{ todo.task }}</p>
-			{% endif %}
-		{% endfor %}
-		<form method=post>
-			<label>Add a member to this room: 
-			<input type=text name="add_member" id="add_member">
-			</label>
-			<input type=submit>
-		</form>
+		<a href="/eventview"><h3>View tasks for this Event</h3></a>
+	
+		
 	{% endif %}
 
 {% endblock content %}

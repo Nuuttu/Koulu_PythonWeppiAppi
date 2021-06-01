@@ -16,14 +16,14 @@
 		{% endfor %}
 		
 		<nav>
-			<a href="/">Todos and Tasks</a> - 
+			<a href="/">Eventplanner</a> - 
 			
 			
 			{% if currentUser() %}
-			<a href="/todo/add">Add Todo</a> -
-			<a href="/rooms">Your Rooms</a> -
+			<a href="/task/add">Add Task</a> -
+			<a href="/rooms">Your Events</a> -
 			<a href="/logout">Logout</a> - 
-				Logged in as: {{ currentUser().email }} 
+				Logged in as: {{ currentUser().username }} 
 				{% if currentRoom() %}
 					- in {{ currentRoom().name }}
 				{% endif %}

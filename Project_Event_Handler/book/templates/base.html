@@ -1,0 +1,35 @@
+{% if not title %}
+	{% set title="base" %}
+{% endif%}
+
+
+<!doctype html>
+<html lang=en>
+	<head>
+		<meta charset="utf-8">
+		<title>{{ title }}</title>
+	</head>
+	<body>
+
+		{% for message in get_flashed_messages() %}
+			<p> &gt; {{ message }}</p>
+		{% endfor %}
+
+		<nav>
+			<a href="/">Book of 160 characters</a> - 
+
+			{% if currentUser() %}
+				<a href="/logout">Logout</a> - 
+				Logged in as: {{ currentUser().username }}
+			{% else %}
+				<a href="/register">Register</a> - 
+				<a href="/login">Login</a>
+			{% endif %}
+		</nav>
+		<h1>{{ title }}</h1>
+		{% block content %}
+		<p>body</p>
+		{% endblock content %}
+	</body>
+</html>
+																																																																	

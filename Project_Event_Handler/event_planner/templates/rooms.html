@@ -1,0 +1,45 @@
+{% set title="Todos and Tasks" %}
+{% extends "base.html" %}
+
+
+
+{% block content %}
+	{% if currentUser() and not rooms %}
+		<p>No todos here, start by <a href="/todo/add">Adding a Todo</a></p>
+	{% else %}
+		<h3>Your Rooms:</h3>
+	{% endif %}
+	<ul>
+	{% for room in rooms %}
+		<li>{{ room.id }} {{ room.name }}
+			- <a href="/joinroom/{{ room.id }}">Join</a>
+			- <a href="/rooms/delete/{{ room.id }}">Delete</a>
+		</li>
+	{% endfor %}
+	</ul>
+	<form method=post>
+		{% for field in form %}
+			{{ field.label if not field.flags.hidden }} {{ field }}
+		{% endfor %}
+		<input type=submit>
+	</form>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<form method=post>
+		<label>Join a room: 
+		<input type=text name="joinroom" id="joinroom">
+		</label>
+		<input type=submit>
+		
+	</form>
+	<p>Current Room: {{ currentRoom().name }}</p>
+
+	{% if currentRoom() %}	
+		{% for field in memberform %}		
+			{{ field.label if not field.flags.hidden }} {{ field }}
+		{% endfor %}
+	{% endif %}
+{% endblock content %}

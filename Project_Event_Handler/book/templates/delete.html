@@ -1,0 +1,15 @@
+{% set title="Deletin a chapter" %}
+{% extends "base.html" %}
+
+
+
+{% block content %}
+<p>Delete a Chapter: </p>
+<ul>
+
+	<li><a href="/chapter/{{ chapter.id }}/remove">Yes, delete</a></li>
+	<li><a href="/">No, Don't</a></li>
+	
+</ul>
+{% endblock content %}
+
